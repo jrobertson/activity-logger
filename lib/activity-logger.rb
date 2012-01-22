@@ -16,7 +16,12 @@ class ActivityLogger
   
   # Returns true if the time from the last entry exceeds 45 minutes.
   #
-  def expired?() 
-    (Time.now - Time.parse(DynarexDaily.new.to_h.last[:time])) / 60 >= 45  
+  def expired?()
+    records = DynarexDaily.new.to_h
+    if !records.empty? then
+      (Time.now - Time.parse(records.last[:time])) / 60 >= 45  
+    else
+      true
+    end
   end
 end
