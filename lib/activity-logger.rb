@@ -18,7 +18,7 @@ class ActivityLogger
   #
   def expired?()
     records = DynarexDaily.new.to_h
-    if !records.empty? then
+    if records and !records.empty? then
       (Time.now - Time.parse(records.last[:time])) / 60 >= 45  
     else
       true
