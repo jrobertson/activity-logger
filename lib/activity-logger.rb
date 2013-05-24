@@ -10,8 +10,9 @@ class ActivityLogger
     Dir.chdir(path) if path    
   end
 
-  def create(desc='')
-    DynarexDaily.new.create(time: Time.now.to_s, desc: desc).save
+  def create(desc='', time=Time.now)
+    
+    DynarexDaily.new.create(time: time.to_s, desc: desc).save
   end
   
   # Returns true if the time from the last entry exceeds 45 minutes.
