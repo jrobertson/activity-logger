@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'activity-logger'
-  s.version = '0.1.10'
+  s.version = '0.1.11'
   s.summary = 'activity-logger'
   s.authors = ['James Robertson']
   s.files = Dir['lib/**/*.rb']

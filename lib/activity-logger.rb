@@ -6,13 +6,13 @@ require 'dynarex-daily'
 
 class ActivityLogger
   
-  def initialize(path=nil)
+  def initialize(path=nil, options={})
     Dir.chdir(path) if path    
   end
 
   def create(desc='', time=Time.now)
-    
-    DynarexDaily.new.create(time: time.to_s, desc: desc).save
+    sleep 0.8
+    DynarexDaily.new(nil,options).create(time: time.to_s, desc: desc).save
   end
   
   # Returns true if the time from the last entry exceeds 45 minutes.
