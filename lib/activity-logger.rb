@@ -5,6 +5,8 @@
 require 'dynarex-daily'
 
 class ActivityLogger
+
+  attr_writer :xml_instruction
   
   def initialize(path=nil, options={})
     @options = options
@@ -13,7 +15,9 @@ class ActivityLogger
 
   def create(desc='', time=Time.now)
     sleep 0.8
-    DynarexDaily.new(nil, @options).create(time: time.to_s, desc: desc).save
+    ddaily = DynarexDaily.new(nil, @options)
+    ddaily.xml_instruction = @xml_instruction
+    ddaily.create(time: time.to_s, desc: desc).save
   end
   
   # Returns true if the time from the last entry exceeds 45 minutes.
