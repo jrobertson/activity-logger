@@ -16,7 +16,7 @@ class ActivityLogger
   def create(desc='', time=Time.now)
 
     ddaily = DynarexDaily.new(nil, @options)
-    ddaily.default_key = 'id' # adds an auto id
+    ddaily.default_key = 'uid' # adds an auto id
     ddaily.xml_instruction = @xml_instruction
 
     ddaily.create(time: time.to_s, desc: desc)
