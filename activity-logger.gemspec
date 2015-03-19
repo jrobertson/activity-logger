@@ -1,10 +1,10 @@
 Gem::Specification.new do |s|
   s.name = 'activity-logger'
-  s.version = '0.2.1'
+  s.version = '0.3.0'
   s.summary = 'Uses the Dynarex-daily gem to log notices for the day'
   s.authors = ['James Robertson']
-  s.files = Dir['lib/**/*.rb']
-  s.add_runtime_dependency('dynarex-daily', '~> 0.1', '>=0.1.13')
+  s.files = Dir['lib/activity-logger.rb', 'lib/notices.xsl', 'lib/notices.css']
+  s.add_runtime_dependency('dynarex-daily', '~> 0.1', '>=0.1.14')
   s.add_runtime_dependency('simple-config', '~> 0.3', '>=0.3.0') 
   s.signing_key = '../privatekeys/activity-logger.pem'
   s.cert_chain  = ['gem-public_cert.pem']

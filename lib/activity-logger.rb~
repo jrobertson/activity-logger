@@ -94,4 +94,3 @@ class ActivityLogger
   end
 
 end
-end

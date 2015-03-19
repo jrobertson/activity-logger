@@ -19,7 +19,7 @@ class ActivityLogger
       
       h = SimpleConfig.new(config).to_h
       dir, @urlbase, @edit_url, @css_url, @xsl_path = \
-                       %i(dir urlbase edit_url css_url, xsl_path).map{|x| h[x]}
+                       %i(dir urlbase edit_url css_url xsl_path).map{|x| h[x]}
       @publish_html = true
     end
     
@@ -29,12 +29,11 @@ class ActivityLogger
   def create(desc='', time=Time.now)
 
     ddaily = DynarexDaily.new(nil, @options)
-    ddaily.default_key = 'uid' # adds an auto id
+    
     ddaily.xml_instruction = @xml_instruction
-
     ddaily.create(time: time.to_s, desc: desc)
     ddaily.save
-    
+
     if @publish_html then
       File.write 'index.txt', ddaily.to_s
       save_html() 
@@ -61,12 +60,19 @@ class ActivityLogger
   
   def render_html(doc)
     
-    #lib = File.exists?('notices.xsl') ? '.' : File.dirname(__FILE__)
-    #xslt_buffer = File.read(File.join(lib,'notices.xsl'))
-    xslt_buffer = File.read @xsl_path
+    xslt_buffer = if @xsl_path then
+    
+      buffer, _ = RXFHelper.read @xsl_path
+      buffer
+      
+    else
+      
+      lib = File.exists?('notices.xsl') ? '.' : File.dirname(__FILE__)
+      File.read(File.join(lib,'notices.xsl'))
+    end
 
     xslt  = Nokogiri::XSLT(xslt_buffer)
-    out = xslt.transform(Nokogiri::XML(doc.xml))
+    out = xslt.transform(Nokogiri::XML(doc.xml))    
     File.write 'index.html', out    
   end
   
@@ -78,8 +84,10 @@ class ActivityLogger
     
     summary = doc.root.element('summary')
 
-    add summary, 'edit_url', "%s/index.txt" % [@edit_url]
-    add summary, 'date',      Date.today.strftime("%d-%b-%Y").upcase
+    date = Date.today.strftime("%d-%b-%Y").upcase
+    add summary, 'title',     date + ' Notices'
+    add summary, 'edit_url',  @edit_url
+    summary.element('date').text = date
     add summary, 'css_url',   @css_url
     add summary, 'published', Time.now.strftime("%d-%m-%Y %H:%M")    
     
@@ -87,10 +95,20 @@ class ActivityLogger
       
       e = entry.element('time')
       e.text = Time.parse(e.text).strftime("%-l:%M%P")
+      desc = entry.element('desc')
+      desc.add  Rexle.new("<span>%s</span>" % desc.text.unescape).root
+      desc.text = ''      
     end
     
     File.write newfile, doc.xml(pretty: true)    
     render_html doc
+    
+    # save the related CSS file locally if the file doesn't already exist
+
+    if not File.exists? 'notices.css' then
+      FileUtils.cp File.join(File.dirname(__FILE__), 'notices.css'),\
+                                                              'notices.css'
+    end    
   end
 
 end
