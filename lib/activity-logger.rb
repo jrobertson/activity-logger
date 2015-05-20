@@ -9,7 +9,7 @@ class ActivityLogger
 
   attr_writer :xml_instruction
   
-  def initialize(dir: nil, options={}, config: nil)
+  def initialize(dir: nil, options: {}, config: nil)
     
     @options = options
     @publish_html = false
