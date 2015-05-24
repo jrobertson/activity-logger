@@ -5,12 +5,22 @@
 require 'dynarex-daily'
 require 'simple-config'
 
+
+module Library
+
+  def fetch_file(filename)
+
+    lib = File.dirname(__FILE__)
+    File.read File.join(lib,'..','stylesheet',filename)
+
+  end
+end
+
 class ActivityLogger
 
-  attr_writer :xml_instruction
   
   def initialize(dir: nil, options: {}, config: nil)
-    
+
     @options = options
     @publish_html = false
 
@@ -28,9 +38,8 @@ class ActivityLogger
 
   def create(desc='', time=Time.now)
 
-    ddaily = DynarexDaily.new(nil, @options)
+    ddaily = DynarexDaily.new(nil, options: @options)
     
-    ddaily.xml_instruction = @xml_instruction
     ddaily.create(time: time.to_s, desc: desc)
     ddaily.save
 
@@ -44,12 +53,14 @@ class ActivityLogger
   # Returns true if the time from the last entry exceeds 45 minutes.
   #
   def expired?()
+    
     records = DynarexDaily.new.to_h
     if records and !records.empty? then
       (Time.now - Time.parse(records.last[:time])) / 60 >= 45  
     else
       true
     end
+    
   end
   
   private
@@ -67,8 +78,8 @@ class ActivityLogger
       
     else
       
-      lib = File.exists?('notices.xsl') ? '.' : File.dirname(__FILE__)
-      File.read(File.join(lib,'notices.xsl'))
+      fetch_file('notices.xsl')
+      
     end
 
     xslt  = Nokogiri::XSLT(xslt_buffer)
@@ -106,8 +117,7 @@ class ActivityLogger
     # save the related CSS file locally if the file doesn't already exist
 
     if not File.exists? 'notices.css' then
-      FileUtils.cp File.join(File.dirname(__FILE__), 'notices.css'),\
-                                                              'notices.css'
+      File.write 'notices.css', fetch_file('notices.css')
     end    
   end
 

@@ -1,0 +1,173 @@
+body { background-color: #c48f33;}
+
+
+  header{
+    background-color: rgba(200,200,200,0.1);
+    border-top: 1px solid rgba(100,150,100,0.4);
+    border-bottom: 1px solid rgba(100,150,100,0.4);
+    overflow: hidden
+    margin: 0.3em; padding: 0.3em 0.1em;
+  }
+
+  header>nav:first-child>ul{
+    background-color: transparent;
+    list-style-type: none;
+    margin: 0.2em; padding: 0.3em;
+  }
+    header>nav:first-child>ul>li {
+      background-color: transparent;
+      color: #392;
+      display: inline;
+      font-family: Verdana, Arial;
+      font-size: 1em;
+    }
+
+    header>nav:first-child>ul>li~li:before {
+      background-color: transparent; color: rgba(100,150,100,0.6);
+      content: "> ";
+    }
+  header>nav>ul>li>a {background-color: tansparent; color: #494;}
+  header>nav>ul>li>a:hover {background-color: transparent; color: #272;}
+  header>nav>ul>li>a:focus {background-color: #161; color: #fff;}
+  header>nav>ul>li>a:active {background-color: rgba(200,200,200,0.4); color: #5a5;}
+
+div {
+  background-color: #AFC332;
+  background-color: transparent;
+  background-color: rgba(255,255,255,0.2);
+  float: left;
+  min-height: 200px;
+  margin: 2em; 0.3em;
+}
+
+div ul {
+
+
+  background-color: #ee2;
+  background-color: transparent;
+  color: rgba(100,100,100,0.9);
+  list-style-type: none;
+  margin: 0.2em; padding: 0.5em;
+}
+
+div ul li{
+
+  background-color: #443;
+  background-color: rgba(255,255,255,0.2);
+  margin: 0.5em;
+  padding: 1em;
+  overflow: hidden;
+}
+
+div ul li time, div ul li span {
+
+  background-color: transparent;
+}
+
+div ul li time {
+
+  background-color: transparent;
+background-color: rgba(255,255,255,0.2);
+  float: right;
+  margin: 0.3em; padding: 0.2em; 0.6em;
+  margin-top: 2em;
+
+
+}
+
+div ul li span {
+
+  background-color: transparent;
+  font-size: 1.4em;
+  float: left;
+  margin: 0.3em; padding: 0.6em;
+}
+
+
+
+aside {
+
+  background-color: transparent;
+  background-color: rgba(255,255,255,0.2);
+  float: left;
+  margin: 3em;
+  
+}
+
+aside ul {
+  background-color: transparent;
+  list-style-type: none;
+  margin: 0.4em 0.7em;
+  padding: 0.6em 0.9em;
+  color: #c48f33;
+}
+
+  aside ul li {
+    background-color: transparent;
+
+
+    font-family: helvetica, arial;
+    font-size: 1.6em;
+    font-weight: 900;
+
+    margin: 0.4em; 
+    padding: 0.9em;
+    text-align: center;
+  }
+
+    aside ul li a{
+      background-color: transparent;
+        color: rgba(100,100,100,0.4);
+      text-decoration: none;
+    }
+
+      aside ul li a:hover {
+        background-color: rgba(100, 100, 100, 0.5);
+        color: #eee;
+        text-decoration: none;
+      }
+
+
+footer{
+    background-color: rgba(255,255,255,0.2);
+  clear: both;
+}
+
+  footer>dl#info{
+    background-color: transparent;
+
+    margin: 1.9em 0 0 0; padding: 2em;
+    width: 33em;
+    overflow: hidden;
+  }
+
+  footer>dl#info{
+    background-color: transparent;
+    margin: 4.1em 0 0.1em 0;
+  }
+    footer>dl#info dt{
+      background-color: transparent;
+      float: left;
+      font:15px arial,sans-serif;
+      padding: 0.2em 0;
+      margin: 0.1em 0 0.1em 0;
+      text-align: left;
+      width: 4.8em;
+    }
+    footer>dl#info dd{
+      background-color: transparent;
+      float: left;
+      margin: 0.1em 0; padding: 0.2em 0.2em;
+      width: 27em;
+    }
+      footer>dl#info ul{
+        background-color: transparent;    
+        list-style-type: none;        
+        margin: 0 0em; padding: 0 0em;
+      }
+        dl#info ul li {
+          background-color: transparent;
+          float: left;
+          padding: 0em 0.5em  0 0;
+          margin: 0em;
+        }
