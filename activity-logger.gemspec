@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'activity-logger'
-  s.version = '0.3.4'
+  s.version = '0.3.5'
   s.summary = 'Uses the Dynarex-daily gem to log notices for the day'
   s.authors = ['James Robertson']
   s.files = Dir['lib/activity-logger.rb', 'stylesheet/notices.xsl', 'stylesheet/notices.css']

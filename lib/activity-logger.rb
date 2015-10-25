@@ -36,11 +36,11 @@ class ActivityLogger
     Dir.chdir(dir) if dir
   end
 
-  def create(desc='', time=Time.now)
+  def create(desc='', time=Time.now, id: id=nil)
 
     ddaily = DynarexDaily.new(nil, options: @options)
     
-    ddaily.create(time: time.to_s, desc: desc)
+    ddaily.create(time: time.to_s, desc: desc, id: id)
     ddaily.save
 
     if @publish_html then
@@ -50,18 +50,7 @@ class ActivityLogger
     
   end
   
-  # Returns true if the time from the last entry exceeds 45 minutes.
-  #
-  def expired?()
-    
-    records = DynarexDaily.new.to_h
-    if records and !records.empty? then
-      (Time.now - Time.parse(records.last[:time])) / 60 >= 45  
-    else
-      true
-    end
-    
-  end
+
   
   private
 
