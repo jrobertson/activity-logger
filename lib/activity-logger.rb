@@ -59,7 +59,7 @@ class ActivityLogger
   end
   
   def render_html(doc)
-    
+
     xslt_buffer = if @xsl_path then
     
       buffer, _ = RXFHelper.read @xsl_path
@@ -71,8 +71,10 @@ class ActivityLogger
       
     end
 
-    xslt  = Nokogiri::XSLT(xslt_buffer)
-    out = xslt.transform(Nokogiri::XML(doc.xml))    
+    # jr280416 xslt  = Nokogiri::XSLT(xslt_buffer)
+    # jr280416 out = xslt.transform(Nokogiri::XML(doc.xml))    
+    out = Rexslt.new(xslt_buffer, doc.xml).to_s
+
     File.write 'index.html', out    
   end
   
