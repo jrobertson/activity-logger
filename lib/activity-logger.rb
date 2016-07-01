@@ -17,9 +17,9 @@ module Library
 end
 
 class ActivityLogger
-
+  include Library
   
-  def initialize(dir: nil, options: {}, config: nil)
+  def initialize(dirpath=nil, dir: dirpath, options: {}, config: nil)
 
     @options = options
     @publish_html = false
@@ -31,6 +31,8 @@ class ActivityLogger
       dir, @urlbase, @edit_url, @css_url, @xsl_path = \
                        %i(dir urlbase edit_url css_url xsl_path).map{|x| h[x]}
       @publish_html = true
+      @options.merge! xslt: @xsl_path
+
     end
     
     Dir.chdir(dir) if dir
@@ -67,12 +69,14 @@ class ActivityLogger
       
     else
       
+      puts 'activity-logger: warning: .xsl file not found, using notices.xsl'
       fetch_file('notices.xsl')
-      
+
     end
 
     # jr280416 xslt  = Nokogiri::XSLT(xslt_buffer)
     # jr280416 out = xslt.transform(Nokogiri::XML(doc.xml))    
+        
     out = Rexslt.new(xslt_buffer, doc.xml).to_s
 
     File.write 'index.html', out    
@@ -107,9 +111,12 @@ class ActivityLogger
     
     # save the related CSS file locally if the file doesn't already exist
 
-    if not File.exists? 'notices.css' then
-      File.write 'notices.css', fetch_file('notices.css')
-    end    
+    css_file = File.basename @css_url
+    
+    if not File.exists? css_file then
+      File.write css_file, fetch_file('notices.css')
+    end
+
   end
 
 end
