@@ -19,19 +19,17 @@ end
 class ActivityLogger
   include Library
   
-  def initialize(dirpath=nil, dir: dirpath, options: {}, config: nil)
+  def initialize(dirpath=nil, dir: dirpath, xsl_path: nil, config: nil)
 
-    @options = options
-    @publish_html = false
-
+    @publish_html = false    
     
     if config then
       
       h = SimpleConfig.new(config).to_h
-      dir, @urlbase, @edit_url, @css_url, @xsl_path = \
+      dir, @urlbase, @edit_url, @css_url, xsl = \
                        %i(dir urlbase edit_url css_url xsl_path).map{|x| h[x]}
+      @xsl_path = xsl_path || xsl
       @publish_html = true
-      @options.merge! xslt: @xsl_path
 
     end
     
@@ -40,12 +38,13 @@ class ActivityLogger
 
   def create(desc='', time=Time.now, id: id=nil)
 
-    ddaily = DynarexDaily.new(nil, options: @options)
+    ddaily = DynarexDaily.new(nil, xslt: @xsl_path)
     
     ddaily.create(time: time.to_s, desc: desc, id: id)
     ddaily.save
 
     if @publish_html then
+      
       File.write 'index.txt', ddaily.to_s
       save_html() 
     end
@@ -90,13 +89,14 @@ class ActivityLogger
     
     summary = doc.root.element('summary')
 
+
     date = Date.today.strftime("%d-%b-%Y").upcase
     add summary, 'title',     date + ' Notices'
     add summary, 'edit_url',  @edit_url
     summary.element('date').text = date
     add summary, 'css_url',   @css_url
     add summary, 'published', Time.now.strftime("%d-%m-%Y %H:%M")    
-    
+
     doc.root.xpath('records/entry') do |entry|
       
       e = entry.element('time')
